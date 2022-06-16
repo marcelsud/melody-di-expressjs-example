@@ -11,12 +11,7 @@ Take a look at the `src/bootstrap.mjs` file where we setup the Melody DI contain
 ```javascript
 export function bootstrap() {
   container.set("keyv", () => {
-    const keyv = new Keyv("sqlite://data/db.sqlite");
-    keyv.on("error", (error) => {
-      console.error(error);
-    });
-
-    return keyv;
+    return new Keyv("sqlite://data/db.sqlite");
   });
 
   container.set("todo_repository", () => {

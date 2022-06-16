@@ -8,12 +8,7 @@ export const container = new Container();
 
 export function bootstrap() {
   container.set("keyv", () => {
-    const keyv = new Keyv("sqlite://data/db.sqlite");
-    keyv.on("error", (error) => {
-      console.error(error);
-    });
-
-    return keyv;
+    return new Keyv("sqlite://data/db.sqlite");
   });
 
   container.set("todo_repository", () => {
