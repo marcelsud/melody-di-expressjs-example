@@ -1,7 +1,5 @@
 FROM node:lts-alpine
 
-RUN apk add --no-cache sqlite
-
 COPY . /app
 WORKDIR /app
 

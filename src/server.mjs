@@ -25,7 +25,7 @@ app.get("/todos", async (_, res) => {
   const todos = await todoRepository.listTodos();
   logger.debug(`Listing ${todos.length} todos`);
 
-  res.send({
+  res.status(200).send({
     data: todos,
   });
 });
@@ -43,7 +43,7 @@ app.get("/todos/:id", async (req, res) => {
 
   logger.debug(`Getting todo with id: ${req.params.id}`);
   const todo = await todoRepository.getTodo(req.params.id);
-  res.send({
+  res.status(200).send({
     data: todo,
   });
 });
@@ -55,7 +55,7 @@ app.post("/todos", async (req, res) => {
     description: req.body.description,
   });
   await todoRepository.saveTodo(todo);
-  res.send({
+  res.status(201).send({
     data: todo,
   });
 });
@@ -88,7 +88,7 @@ app.patch("/todos/:id", async (req, res) => {
 
   await todoRepository.saveTodo(todo);
 
-  res.send({
+  res.status(200).send({
     data: todo,
   });
 });
@@ -110,7 +110,7 @@ app.put("/todos/:id", async (req, res) => {
   todo.setDescription(req.body.description);
   todo.markAsDone(req.body.done);
   await todoRepository.saveTodo(todo);
-  res.send({
+  res.status(200).send({
     data: todo,
   });
 });
@@ -144,6 +144,18 @@ app.use(function (err, _, res, next) {
   });
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   logger.info(`Example app listening on port ${port}`);
 });
+
+process.on("SIGINT", shutdown);
+
+function shutdown() {
+  console.log("gracefully shutting down");
+  server.close(function () {
+    console.log(
+      "\n\nDon't forget to check Melody DI out at https://www.npmjs.com/package/@marcelsud/melody-di"
+    );
+    console.log("Bye! 👋");
+  });
+}

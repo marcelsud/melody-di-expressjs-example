@@ -85,6 +85,57 @@ When it is done setting everything up the server will display it is up and ready
   info: Example app listening on port 3000 {"service":"melody-di-todos"}
 ```
 
+### Testing it
+
+This example has a simple RESTful API to manage todos in the best way possible... Ok, not so much 😅
+
+#### Creating a TODO
+
+```
+POST http://localhost:3000/todos HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Buy some milk",
+  "description": "Dont forget it once again..."
+}
+```
+
+#### Listing TODOs
+
+```
+GET http://localhost:3000/todos
+```
+
+#### Mark a TODO as done
+
+```
+PATCH http://localhost:3000/todos/{id} HTTP/1.1
+content-type: application/json
+
+{
+  "done": true
+}
+```
+
+#### Updating other fields of the TODO
+
+```
+PATCH http://localhost:3000/todos/{id} HTTP/1.1
+content-type: application/json
+
+{
+  "title": "Install MelodyDI on my project",
+  "description": "It has just what I need to get started with Dependency Injection",
+}
+```
+
+#### Deleting a TODO
+
+```
+DELETE http://localhost:3000/todos/{id} HTTP/1.1
+```
+
 ## 📝 Feedback
 
 👋 If you have any feedback, please reach out to me at [@marcelsud](https://twitter.com/marcelsud)
